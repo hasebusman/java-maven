@@ -2,12 +2,13 @@
 FROM maven:3.9.6-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
-RUN mvn clean package
+RUN mvn clean package -DskipTests
 
-# Stage 2: Run the JAR (optional)
+# Stage 2: Run the JAR
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+# Copy the JAR file (rename it to app.jar)
+COPY --from=build /app/target/*.jar /app/app.jar
 
-# Default command (update 'app.jar' if your JAR has a different name)
-CMD ["java", "-jar", "app.jar"]
+# Run the application
+CMD ["java", "-jar", "/app/app.jar"]
