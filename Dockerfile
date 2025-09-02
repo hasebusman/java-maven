@@ -7,8 +7,8 @@ RUN mvn clean package -DskipTests
 # Stage 2: Run the JAR
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-# Copy the JAR file (rename it to app.jar)
-COPY --from=build /app/target/*.jar /app/app.jar
+# Copy all jar files into /app
+COPY --from=build /app/target/*.jar /app/
 
-# Run the application
-CMD ["java", "-jar", "/app/app.jar"]
+# Run the shaded JAR (update name if needed)
+CMD ["java", "-jar", "/app/jb-hello-world-maven-0.2.0-shaded.jar"]
