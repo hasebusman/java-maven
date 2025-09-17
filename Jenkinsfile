@@ -30,8 +30,7 @@ pipeline{
             }
         }
         failure{
-            echo "this will execute only if the pipeline fails"
-            currentBuild.result = 'FAILURE'
+            echo "this will execute only if the pipeline fails" 
             error("Pipeline failed") 
             
         }
